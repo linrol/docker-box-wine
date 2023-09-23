@@ -55,6 +55,29 @@ COPY wrap-wine.sh /
 RUN bash /wrap-wine.sh \
  && rm /wrap-wine.sh
 
-WORKDIR /root
+# Add user and group
+RUN groupadd group \
+  && useradd -m -g group user \
+  && usermod -a -G audio user \
+  && usermod -a -G video user \
+  && chsh -s /bin/bash user \
+  && echo 'User Created'
+
+# Initialise wine
+RUN mv /root/wine /home/user/ \
+  && su user -c 'wine wineboot' \
+  \
+  # wintricks
+  && su user -c 'winetricks -q msls31' \
+  && su user -c 'winetricks -q ole32' \
+  && su user -c 'winetricks -q riched20' \
+  && su user -c 'winetricks -q riched30' \
+  && su user -c 'winetricks -q win7' \
+  \
+  # Clean
+  && rm -fr /home/user/{.cache,tmp}/* \
+  && rm -fr /tmp/* \
+  && echo 'Wine Initialized'
+
 ENTRYPOINT ["bash", "-c"]
 CMD ["bash"]

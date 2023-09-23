@@ -1,23 +1,23 @@
-# WineBox64
+# docker-box-wine
 Dockerfile for emulating win32 and win64 programs on arm64 using wine and box. Tested on Oracle Cloud Infrastructure Ampere A1.
 
 ## Using
 Docker
 ```bash
-docker build -t winebox64 . 
-docker run --name winebox64 -ti winebox64
+docker build -t docker-box-wine . 
+docker run --name docker-box-wine -ti docker-box-wine
 ```
 Docker compose
 ```bash
 docker-compose -d up 
-docker attach winebox64
+docker attach docker-box-wine
 ```
 
 ## Example
 Running a windows-only game server from Steam (The Forest).
 1. Start a container
 ```bash
-docker run -ti --name theforest -v $PWD/forestdata:/root/theforest -p 8766:8766 -p 27015:27015 -p 27016:27016 winebox64 
+docker run -ti --name theforest -v $PWD/forestdata:/root/theforest -p 8766:8766 -p 27015:27015 -p 27016:27016 docker-box-wine 
 ```
 2. Run this script inside the container
 ```bash
