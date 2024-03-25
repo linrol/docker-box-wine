@@ -48,18 +48,18 @@ RUN groupadd group \
 
 # Initialise wine
 RUN mv ~/wine /home/user/ \
-  && chown -R user:group /home/user/ \
-  && su user -c 'wine wineboot' \
+  && chown -R user:group /home/user/
 
 # wintricks
-RUN su user -c 'winetricks -q msls31' \
-  && su user -c 'winetricks -q ole32' \
-  && su user -c 'winetricks -q riched20' \
-  && su user -c 'winetricks -q riched30' \
-  && su user -c 'winetricks -q win7' \
-  \
-  # Clean
-  && rm -fr /home/user/{.cache,tmp}/* \
+RUN su user -c 'wine wineboot'
+RUN su user -c 'winetricks -q msls31'
+RUN su user -c 'winetricks -q ole32'
+RUN su user -c 'winetricks -q riched20'
+RUN su user -c 'winetricks -q riched30'
+RUN su user -c 'winetricks -q win7'
+
+# Clean
+RUN rm -fr /home/user/{.cache,tmp}/* \
   && rm -fr /tmp/* \
   && echo 'Wine Initialized'
 
