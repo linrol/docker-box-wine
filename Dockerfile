@@ -47,12 +47,12 @@ RUN groupadd group \
   && echo 'User Created'
 
 # Initialise wine
-RUN mv /root/wine /home/user/ \
+RUN mv ~/wine /home/user/ \
   && chown -R user:group /home/user/ \
   && su user -c 'wine wineboot' \
-  \
-  # wintricks
-  && su user -c 'winetricks -q msls31' \
+
+# wintricks
+RUN su user -c 'winetricks -q msls31' \
   && su user -c 'winetricks -q ole32' \
   && su user -c 'winetricks -q riched20' \
   && su user -c 'winetricks -q riched30' \
